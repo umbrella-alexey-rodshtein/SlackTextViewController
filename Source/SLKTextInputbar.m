@@ -698,43 +698,50 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 - (void)slk_updateConstraintConstants
 {
-    CGFloat zero = 0.0;
-    
-    self.textViewBottomMarginC.constant = self.slk_bottomMargin;
+	CGFloat zero = 0.0;
 
-    if (self.isEditing)
-    {
-        self.editorContentViewHC.constant = self.editorContentViewHeight;
-        
-        self.leftButtonWC.constant = zero;
-        self.leftButtonHC.constant = zero;
-        self.leftMarginWC.constant = zero;
-        self.leftButtonBottomMarginC.constant = zero;
-        self.rightButtonWC.constant = zero;
-        self.rightMarginWC.constant = zero;
-    }
-    else {
-        self.editorContentViewHC.constant = zero;
-        
-        CGSize leftButtonSize = [self.leftButton imageForState:self.leftButton.state].size;
-        
-        if (leftButtonSize.width > 0) {
-            self.leftButtonHC.constant = roundf(leftButtonSize.height);
-            self.leftButtonBottomMarginC.constant = roundf((self.intrinsicContentSize.height - leftButtonSize.height) / 2.0) + self.slk_contentViewHeight / 2.0;
-        }
-        
-        self.leftButtonWC.constant = roundf(leftButtonSize.width);
-        self.leftMarginWC.constant = (leftButtonSize.width > 0) ? self.contentInset.left : zero;
-        
-        self.rightButtonWC.constant = [self slk_appropriateRightButtonWidth];
-        self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
-        
-        CGFloat rightVerMargin = (self.intrinsicContentSize.height - self.slk_contentViewHeight - self.rightButton.intrinsicContentSize.height) / 2.0;
-        CGFloat rightVerBottomMargin = rightVerMargin + self.slk_contentViewHeight;
-        
-        self.rightButtonTopMarginC.constant = rightVerMargin;
-        self.rightButtonBottomMarginC.constant = rightVerBottomMargin;
-    }
+	self.textViewBottomMarginC.constant = self.slk_bottomMargin;
+
+	if (self.isEditing)
+	{
+		self.editorContentViewHC.constant = self.editorContentViewHeight;
+
+		self.leftButtonWC.constant = zero;
+		self.leftButtonHC.constant = zero;
+		self.leftMarginWC.constant = zero;
+		self.leftButtonBottomMarginC.constant = zero;
+		self.rightButtonWC.constant = zero;
+		self.rightMarginWC.constant = zero;
+	}
+	else {
+		self.editorContentViewHC.constant = zero;
+
+		CGSize leftButtonSize = [self.leftButton imageForState:self.leftButton.state].size;
+
+		if (leftButtonSize.width > 0) {
+			self.leftButtonHC.constant = roundf(leftButtonSize.height);
+			self.leftButtonBottomMarginC.constant = roundf((self.intrinsicContentSize.height - leftButtonSize.height) / 2.0) + self.slk_contentViewHeight / 2.0;
+		}
+
+		self.leftButtonWC.constant = roundf(leftButtonSize.width);
+		self.leftMarginWC.constant = (leftButtonSize.width > 0) ? self.contentInset.left : zero;
+
+		// MARK: - JC CHANGES
+		if ([self.rightButton.titleLabel.text  isEqual: @"NOTITLE"]) {
+			self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
+			self.rightButtonWC.constant = zero;
+			self.rightMarginWC.constant = zero;
+		} else {
+			self.rightButtonWC.constant = [self slk_appropriateRightButtonWidth];
+			self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
+		}
+
+		CGFloat rightVerMargin = (self.intrinsicContentSize.height - self.slk_contentViewHeight - self.rightButton.intrinsicContentSize.height) / 2.0;
+		CGFloat rightVerBottomMargin = rightVerMargin + self.slk_contentViewHeight;
+
+		self.rightButtonTopMarginC.constant = rightVerMargin;
+		self.rightButtonBottomMarginC.constant = rightVerBottomMargin;
+	}
 }
 
 
