@@ -726,15 +726,8 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 		self.leftButtonWC.constant = roundf(leftButtonSize.width);
 		self.leftMarginWC.constant = (leftButtonSize.width > 0) ? self.contentInset.left : zero;
 
-		// MARK: - JC CHANGES
-		if ([self.rightButton.titleLabel.text  isEqual: @"NOTITLE"]) {
-			self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
-			self.rightButtonWC.constant = zero;
-			self.rightMarginWC.constant = zero;
-		} else {
-			self.rightButtonWC.constant = [self slk_appropriateRightButtonWidth];
-			self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
-		}
+		self.rightButtonWC.constant = [self slk_appropriateRightButtonWidth];
+		self.rightMarginWC.constant = [self slk_appropriateRightButtonMargin];
 
 		CGFloat rightVerMargin = (self.intrinsicContentSize.height - self.slk_contentViewHeight - self.rightButton.intrinsicContentSize.height) / 2.0;
 		CGFloat rightVerBottomMargin = rightVerMargin + self.slk_contentViewHeight;
@@ -744,6 +737,18 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 	}
 }
 
+- (void)updateInputViewLayout:(BOOL)isNeedShowAttachButton
+{
+	if (isNeedShowAttachButton) {
+		self.rightButtonWC.constant = 27.0;//[self slk_appropriateRightButtonWidth];
+		self.rightMarginWC.constant = 3.0;//[self slk_appropriateRightButtonMargin];
+	} else {
+		self.rightButtonWC.constant = 0.0;
+		self.rightMarginWC.constant = 0.0;
+	}
+
+	[self layoutSubviews];
+}
 
 #pragma mark - Observers
 
