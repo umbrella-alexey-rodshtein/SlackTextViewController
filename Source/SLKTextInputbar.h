@@ -119,6 +119,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)endTextEdition;
 
+- (void)updateInputViewLayout:(BOOL)isNeedShowAttachButton;
+
 
 #pragma mark - Text Counting
 ///------------------------------------------------
