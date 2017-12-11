@@ -103,6 +103,10 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 	[self slk_registerNotifications];
 
+	self.textView.textContainerInset = UIEdgeInsetsMake(6, 7, 6, 31);
+	self.textView.showsHorizontalScrollIndicator = false;
+	self.textView.showsVerticalScrollIndicator = false;
+
 	[self slk_registerTo:self.layer forSelector:@selector(position)];
 	[self slk_registerTo:self.leftButton.imageView forSelector:@selector(image)];
 	[self slk_registerTo:self.rightButton.titleLabel forSelector:@selector(font)];
@@ -656,9 +660,6 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 - (void)slk_setupViewConstraints
 {
-	self.textView.textContainerInset = UIEdgeInsetsMake(6, 7, 6, 31);
-	self.textView.showsHorizontalScrollIndicator = false;
-	self.textView.showsVerticalScrollIndicator = false;
 
 	NSDictionary *views = @{@"textView": self.textView,
 							@"leftButton": self.leftButton,
