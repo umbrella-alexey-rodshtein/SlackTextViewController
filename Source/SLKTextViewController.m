@@ -148,7 +148,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 - (void)slk_commonInit
 {
     [self slk_registerNotifications];
-    
+
+	self.scrollViewTopContstraint = 0;
     self.bounces = YES;
     self.inverted = YES;
     self.shakeToClearEnabled = NO;
@@ -2241,7 +2242,9 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                             @"textInputbar": self.textInputbar
                             };
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(0)]|" options:0 metrics:nil views:views]];
+	NSString *mainScrollViewRatio = [NSString stringWithFormat: @"V:|-(%d)-[scrollView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(0)]|", _scrollViewTopContstraint];
+
+	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:mainScrollViewRatio options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[autoCompletionView(0@750)][typingIndicatorView]" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[autoCompletionView]|" options:0 metrics:nil views:views]];
